@@ -21,11 +21,11 @@ class ModuleRegistry:
     _modules = {}
 
     @classmethod
-    def register(cls, module: BaseModule):
+    def register(cls, module):
         cls._modules[module.name] = module
 
     @classmethod
-    def get(cls, name: str) -> BaseModule:
+    def get(cls, name: str):
         return cls._modules[name]
 
     @classmethod
