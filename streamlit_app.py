@@ -3,19 +3,20 @@ from modules.base import ModuleRegistry
 
 st.set_page_config(page_title="Pentest Toolbox", page_icon="🛠️", layout="wide")
 
-# Authentication
+# Authentification
 if not getattr(st, 'user', None) or not st.user.is_logged_in:
     st.title("Pentest Toolbox – Connexion requise")
     if st.button("Se connecter"):
         st.login()
     st.stop()
 
+# Sidebar profile
 with st.sidebar:
     st.markdown(f"👤 **{st.user.get('name','Utilisateur')}**")
     if st.button("Se déconnecter"):
         st.logout()
 
-# Init
+# State init
 if 'results' not in st.session_state:
     st.session_state.results = {}
 
@@ -28,9 +29,9 @@ if page == "Dashboard":
     if not st.session_state.results:
         st.info("Aucun résultat. Lancez un module.")
     else:
-        for sec, items in st.session_state.results.items():
+        for section, items in st.session_state.results.items():
             for key, data in items.items():
-                with st.expander(f"{sec} – {key}"):
+                with st.expander(f"{section} – {key}"):
                     st.json(data)
 else:
     ModuleRegistry.get(page).render()
