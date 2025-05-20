@@ -1,8 +1,15 @@
+# Python
 __pycache__/
 *.py[cod]
+
+# Virtualenv
 .venv/
-streamlit_app.py? # keep
-secrets.toml.example
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# VS Code
 .vscode/
-.devcontainer/
-assets/logo.png
+
+# Logs
+*.log
