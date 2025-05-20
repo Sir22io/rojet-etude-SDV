@@ -1,6 +1,6 @@
 # Pentest Toolbox
 
-**Note de sécurité :** ne versionnez **jamais** le fichier `secrets.toml` contenant des informations sensibles. Utilisez le fichier d'exemple `secrets.toml.example`.
+**Note de sécurité :** ne versionnez **jamais** le fichier `secrets.toml` contenant des informations sensibles. Utilisez le fichier d'exemple `secrets.toml.example`.
 
 ## Prérequis
 - Python 3.8+
@@ -18,8 +18,8 @@ bash setup.sh
 ```
 
 ## Configuration OIDC
-1. Copiez `.streamlit/secrets.toml.example` vers `.streamlit/secrets.toml`
-2. Remplissez vos `client_id`, `client_secret` et `cookie_secret` générés
+1. Copiez `.streamlit/secrets.toml.example` vers `.streamlit/secrets.toml` (le script le fera automatiquement si absent).
+2. Remplissez vos `client_id`, `client_secret` et `cookie_secret` dans `.streamlit/secrets.toml`.
 3. Ajoutez `http://localhost:8501/oauth2callback` dans les **Allowed Callback URLs** de votre application Auth0
 
 ## Utilisation manuelle

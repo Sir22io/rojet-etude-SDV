@@ -10,6 +10,13 @@ cyan "== Installation et démarrage automatique =="
 echo "Dossier projet : $PROJECT_DIR"
 cd "$PROJECT_DIR"
 
+# Auto-create .streamlit/secrets.toml from example if missing
+if [[ ! -f .streamlit/secrets.toml ]]; then
+  cyan "[0/6] Création de .streamlit/secrets.toml depuis l'exemple"
+  mkdir -p .streamlit
+  cp .streamlit/secrets.toml.example .streamlit/secrets.toml
+fi
+
 # 1) Gestionnaire de paquets
 if command -v apt-get &>/dev/null; then
   PKG_MANAGER="apt"
@@ -20,7 +27,7 @@ else
 fi
 
 # 2) Paquets système
-cyan "[1/5] Installation des paquets système (sudo)…"
+cyan "[1/6] Installation des paquets système (sudo)…"
 if [[ $PKG_MANAGER == "apt" ]]; then
   sudo apt-get update -y
   sudo apt-get install -y python3 python3-venv python3-pip nmap nikto git curl
@@ -29,7 +36,7 @@ else
 fi
 
 # 3) SearchSploit
-cyan "[2/5] Vérification de SearchSploit…"
+cyan "[2/6] Vérification de SearchSploit…"
 if ! command -v searchsploit &>/dev/null; then
   sudo git clone --depth=1 https://gitlab.com/exploit-database/exploitdb.git /opt/exploitdb
   sudo ln -sf /opt/exploitdb/searchsploit /usr/local/bin/searchsploit
@@ -41,12 +48,12 @@ fi
 
 # 4) Virtualenv & pip
 VENV_DIR=".venv"
-cyan "[3/5] Création de l'environnement virtuel…"
+cyan "[3/6] Création de l'environnement virtuel…"
 rm -rf "$VENV_DIR"
 python3 -m venv "$VENV_DIR"
 source "$VENV_DIR/bin/activate"
 
-cyan "[4/5] Installation des dépendances Python…"
+cyan "[4/6] Installation des dépendances Python…"
 pip install --upgrade pip setuptools wheel
 if [[ -f requirements.txt ]]; then
   pip install -r requirements.txt
@@ -55,7 +62,7 @@ else
 fi
 
 # 5) VS Code settings (optionnel)
-cyan "[5/5] Configuration VS Code…"
+cyan "[5/6] Configuration VS Code…"
 mkdir -p .vscode
 cat > .vscode/settings.json << EOF
 {
@@ -66,5 +73,5 @@ EOF
 green "VS Code prêt à l'emploi."
 
 # 6) Lancement de l'application
-green "Installation terminée ! Démarrage de Streamlit…"
+cyan "[6/6] Démarrage de l'application Streamlit…"
 exec streamlit run streamlit_app.py
