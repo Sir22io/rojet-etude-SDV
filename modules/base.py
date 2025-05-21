@@ -12,11 +12,8 @@ class BaseModule:
 class ModuleRegistry:
     _modules = {}
     @classmethod
-    def register(cls, module):
-        cls._modules[module.name] = module
+    def register(cls, m): cls._modules[m.name] = m
     @classmethod
-    def names(cls):
-        return list(cls._modules.keys())
+    def names(cls): return list(cls._modules.keys())
     @classmethod
-    def get(cls, name):
-        return cls._modules[name]
+    def get(cls, name): return cls._modules[name]

@@ -5,7 +5,7 @@ class ScanningModule(BaseModule):
         super().__init__("Scanning","scanning"); ModuleRegistry.register(self)
     def render(self):
         st.header("Scanning")
-        tgt=st.text_input("Target")
-        if st.button("Scan") and tgt:
-            sc=nmap.PortScanner(); sc.scan(tgt); st.json(sc[tgt])
+        t=st.text_input("Target")
+        if st.button("Run"):
+            sc=nmap.PortScanner(); sc.scan(t); st.json(sc[t])
 ScanningModule()

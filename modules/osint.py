@@ -6,7 +6,7 @@ class OsintModule(BaseModule):
     def render(self):
         st.header("OSINT")
         q=st.text_input("Keyword")
-        if st.button("Search") and q:
+        if st.button("Search"):
             r=requests.get(f"https://api.github.com/search/repositories?q={q}&per_page=5").json()
             st.json(r)
 OsintModule()

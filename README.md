@@ -1,19 +1,13 @@
 # Pentest Toolbox
 
-## Installation rapide
+## Installation et lancement
 
 ```bash
-unzip sir22io-rojet-etude-sdv-auto.zip
-cd sir22io-rojet-etude-sdv-auto
+unzip sir22io-rojet-etude-sdv-complete.zip
+cd sir22io-rojet-etude-sdv-complete
 chmod +x setup.sh
 ./setup.sh
 ```
 
-Ou manuellement :
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-streamlit run streamlit_app.py
-```
+L’application démarrera automatiquement sur http://localhost:8501 avec Auth0.  
+Aucun autre paramétrage n’est nécessaire.
