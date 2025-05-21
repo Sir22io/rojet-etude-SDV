@@ -1,24 +1,15 @@
 import streamlit as st
-
 class BaseModule:
-    def __init__(self, name, prefix):
-        self.name = name
-        self.prefix = prefix
-    def run_and_store(self, key, func, *args, **kwargs):
-        res = func(*args, **kwargs)
-        st.session_state.results.setdefault(self.prefix, {})[key] = res
-        return res
-    def render(self):
-        raise NotImplementedError
-
+    def __init__(self,name,prefix):
+        self.name=name; self.prefix=prefix
+    def run_and_store(self,key,func,*a,**k):
+        r=func(*a,**k); st.session_state.results.setdefault(self.prefix,{})[key]=r; return r
+    def render(self): raise NotImplementedError
 class ModuleRegistry:
-    _modules = {}
+    _m={}
     @classmethod
-    def register(cls, module):
-        cls._modules[module.name] = module
+    def register(cls,m): cls._m[m.name]=m
     @classmethod
-    def names(cls):
-        return list(cls._modules.keys())
+    def names(cls): return list(cls._m.keys())
     @classmethod
-    def get(cls, name):
-        return cls._modules[name]
+    def get(cls,n): return cls._m[n]
