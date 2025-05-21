@@ -1,20 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Installer paquets système
-if command -v apt-get &>/dev/null; then
-  sudo apt-get update -y
-  sudo apt-get install -y python3 python3-venv python3-pip nmap nikto git curl
-elif command -v pacman &>/dev/null; then
-  sudo pacman -Sy --noconfirm python python-virtualenv python-pip nmap nikto git curl
-fi
+cyan(){ printf '\033[1;36m%s\033[0m\n' "$1"; }
+green(){ printf '\033[1;32m%s\033[0m\n' "$1"; }
+err(){ printf '\033[1;31m%s\033[0m\n' "$1"; exit 1; }
 
-# Environnement Python
+cyan "== Installation & lancement sur Kali =="
+
+# 1) Installer paquets système
+cyan "[1/4] Installation paquets APT"
+sudo apt-get update -y
+sudo apt-get install -y python3 python3-venv python3-pip nmap nikto exploitdb git curl
+
+# 2) Créer et activer l'environnement Python
+cyan "[2/4] Configuration Python"
 rm -rf .venv
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
-# Lancer Streamlit
-streamlit run streamlit_app.py
+# 3) VS Code settings (optionnel)
+cyan "[3/4] Configuration VS Code"
+mkdir -p .vscode
+cat > .vscode/settings.json << EOF
+{
+  "python.defaultInterpreterPath": "\${workspaceFolder}/.venv/bin/python",
+  "python.analysis.extraPaths": ["\${workspaceFolder}/modules"]
+}
+EOF
+
+# 4) Lancement de Streamlit
+cyan "[4/4] Lancement de l'application"
+exec streamlit run streamlit_app.py

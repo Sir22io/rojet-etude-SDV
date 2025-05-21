@@ -1,9 +1,9 @@
 import streamlit as st
 from modules.base import ModuleRegistry
 
-st.set_page_config(page_title="Pentest Toolbox", page_icon="🛠️", layout="wide")
+st.set_page_config(page_title="Pentest Toolbox", layout="wide")
 
-# Auth OIDC
+# Authentification OIDC
 if not getattr(st, 'user', None) or not st.user.is_logged_in:
     st.title("Pentest Toolbox – Connexion requise")
     if st.button("Se connecter"):
@@ -16,11 +16,11 @@ with st.sidebar:
     if st.button("Se déconnecter"):
         st.logout()
 
-# Init
+# Init state
 if 'results' not in st.session_state:
     st.session_state.results = {}
 
-# Menu
+# Navigation et logo
 st.sidebar.image("assets/logo.png", width=200)
 page = st.sidebar.radio("Module", ["Dashboard"] + ModuleRegistry.names())
 
@@ -29,9 +29,9 @@ if page == "Dashboard":
     if not st.session_state.results:
         st.info("Aucun résultat. Lancez un module.")
     else:
-        for sec, items in st.session_state.results.items():
+        for section, items in st.session_state.results.items():
             for key, data in items.items():
-                with st.expander(f"{sec} – {key}"):
+                with st.expander(f"{section} – {key}"):
                     st.json(data)
 else:
     ModuleRegistry.get(page).render()
